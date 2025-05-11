@@ -11,16 +11,22 @@ version: 2
 builds:
   - env:
       - CGO_ENABLED=0
+    # Disable binary building for libraries
+    skip: true
+    # But still build for these platforms (for testing)
     goos:
       - linux
-      - darwin  # Changed from 'windows' since it's a library
+      - darwin
     goarch:
       - amd64
-      - arm64   # Added ARM support
+      - arm64
 
 archives:
-  - formats: [tar.gz]  # Simplified - no need for zip since it's a library
-    name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
+  - formats: [tar.gz]
+    # Include source files
+    files:
+      - "*.go"
+      - "go.*"
 
 # Remove changelog filters (keep default behavior)
 changelog: {}
