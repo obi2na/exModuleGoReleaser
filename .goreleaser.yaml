@@ -1,0 +1,34 @@
+# This is an example .goreleaser.yml file with some sensible defaults.
+# Make sure to check the documentation at https://goreleaser.com
+
+# The lines below are called `modelines`. See `:help modeline`
+# Feel free to remove those if you don't want/need to use them.
+# yaml-language-server: $schema=https://goreleaser.com/static/schema.json
+# vim: set ts=2 sw=2 tw=0 fo=cnqoj
+
+version: 2
+
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin  # Changed from 'windows' since it's a library
+    goarch:
+      - amd64
+      - arm64   # Added ARM support
+
+archives:
+  - formats: [tar.gz]  # Simplified - no need for zip since it's a library
+    name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
+
+# Remove changelog filters (keep default behavior)
+changelog: {}
+
+release:
+  github:
+    owner: obi2na  # Add your GitHub username
+    name: exModuleGoReleaser     # Add your repo name
+
+# Remove before.hooks if you're not using them
+# Remove format_overrides since we're only using tar.gz
